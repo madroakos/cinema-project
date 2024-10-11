@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Movies {
+  movie_id     Int      @id @default(autoincrement())
+  title        String
+  genre        String
+  duration     Int
+  director     String
+  cast         String
+  description  String
+  release_date DateTime
+  rating       Float
+
+  Showtimes    Showtimes[]
+}
+
+model Screens {
+  screen_id     Int      @id @default(autoincrement())
+  screen_number Int
+  capacity      Int
+
+  Showtimes     Showtimes[]
+}
+
+model Showtimes {
+  showtime_id     Int      @id @default(autoincrement())
+  movie_id        Int
+  screen_id       Int
+  showtime        DateTime
+  available_seats Int
+
+  Movies          Movies   @relation(fields: [movie_id], references: [movie_id])
+  Screens         Screens  @relation(fields: [screen_id], references: [screen_id])
+  Bookings        Bookings[]
+}
+
+model Bookings {
+  booking_id     Int      @id @default(autoincrement())
+  user_id        Int
+  showtime_id    Int
+  booking_date   DateTime
+  total_amount   Float
+  status         String
+
+  Showtimes      Showtimes @relation(fields: [showtime_id], references: [showtime_id])
+  Tickets        Tickets[]
+}
+
+model Tickets {
+  ticket_id      Int      @id @default(autoincrement())
+  booking_id     Int
+  seat_id        Int
+
+  Bookings       Bookings  @relation(fields: [booking_id], references: [booking_id])
+}
+
