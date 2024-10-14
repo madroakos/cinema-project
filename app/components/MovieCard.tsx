@@ -9,19 +9,20 @@ type MovieWithShowtimes = Movies & {
 export default function MovieCard({ movie }: { movie: MovieWithShowtimes }) {
   return (
     <div className="flex flex-row">
-      <figure className="w-52">
+      <figure className="w-48">
         <img src={movie.posterUrl} alt={movie.title} className="rounded-2xl"/>
       </figure>
-      <div className="pl-6">
+      <div className="pl-6 flex flex-col gap-2">
         <h2 className="card-title">{movie.title}</h2>
-        <div className="flex flex-row gap-6">
+        <div className="flex flex-row gap-2">
             <span>{movie.genre}</span>
-            <span>{movie.duration} min</span>
+            |
+            <span>{movie.duration} mins</span>
         </div>
         <div className="card-actions">
           {movie.Showtimes.map((showtime) => (
             <button key={showtime.showtime_id} className="btn btn-primary">
-              {formatTimeToHHMM(new Date(showtime.showtime))}
+              {formatTimeToHHMM(showtime.showtime)}
             </button>
           ))}
         </div>
