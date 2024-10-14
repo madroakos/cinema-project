@@ -6,13 +6,11 @@ async function main() {
   const movie1 = await prisma.movies.create({
     data: {
       title: 'Inception',
+      posterUrl: 'https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg',
       genre: 'Sci-Fi',
       duration: 148,
-      director: 'Christopher Nolan',
-      cast: 'Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page',
       description: 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.',
       release_date: new Date('2010-07-16'),
-      rating: 8.8,
     },
   });
 
@@ -20,7 +18,8 @@ async function main() {
   const screen1 = await prisma.screens.create({
     data: {
       screen_number: 1,
-      capacity: 200,
+      columns: 10,
+      rows: 20,
     },
   });
 
@@ -30,7 +29,6 @@ async function main() {
       movie_id: movie1.movie_id,
       screen_id: screen1.screen_id,
       showtime: new Date('2023-10-01T14:00:00Z'),
-      available_seats: 200,
     },
   });
 
