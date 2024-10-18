@@ -1,14 +1,9 @@
+import { getAllMovies } from '@/prisma/actions';
+import MovieList from './components/MovieList';
 
-import prisma from "@/prisma/db";
-import React from "react";
-import MovieList from "@/app/components/MovieList";
 
 export default async function Page() {
-  const movies = await prisma.movies.findMany({
-    include: {
-      Showtimes: true,
-    },
-  });
+  const movies = await getAllMovies();
 
   return (
     <div className="w-full p-6">
@@ -16,4 +11,4 @@ export default async function Page() {
       <MovieList movies={movies} />
     </div>
   );
-};
+}

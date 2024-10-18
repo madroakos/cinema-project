@@ -11,7 +11,7 @@ const MoviePicker: React.FC<MoviePickerProps> = ({ movies, onChange }) => {
       <select
         name="movies"
         id="movies"
-        className="w-full p-2 text-lg rounded-xl"
+        className="select select-bordered w-full"
         defaultValue="Choose a movie"
         onChange={(e) => onChange(e.target.value)}
       >

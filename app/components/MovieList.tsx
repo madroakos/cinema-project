@@ -22,7 +22,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     : movies;
 
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-12'>
         <MoviePicker movies={movies} onChange={setFilter}/>
         {filteredMovies.map((movie) => (
             <MovieCard key={movie.movie_id} movie={movie} />
