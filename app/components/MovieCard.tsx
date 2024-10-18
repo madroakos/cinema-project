@@ -1,14 +1,16 @@
+'use client';
 import React from "react";
 import { Movies, Showtimes } from "@prisma/client";
 import { formatTimeToHHMM } from "@/scripts/time";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 type MovieWithShowtimes = Movies & {
   Showtimes: Showtimes[];
 };
 
 export default function MovieCard({ movie }: { movie: MovieWithShowtimes }) {
-  // Group showtimes by dimension and then by language
+  const router = useRouter();
+
   const groupedShowtimes = movie.Showtimes.reduce((acc, showtime) => {
     const { dimension, language } = showtime;
     if (!acc[dimension]) {
@@ -41,11 +43,15 @@ export default function MovieCard({ movie }: { movie: MovieWithShowtimes }) {
                   <h4 className="flex flex-row gap-2 mt-3 mb-2">
                     <div className="badge badge-neutral text-xs sm:text-sm">{dimension}</div>
                     <div className="badge badge-neutral text-xs sm:text-sm">{language}</div>
-                    {showtimes[0].subtitle && <div className="badge badge-neutral text-xs text-nowrap sm:text-sm">{showtimes[0].subtitle}</div>}
+                    {showtimes[0].subtitle && showtimes[0].subtitle.toLowerCase() !== "none" && (
+                      <div className="badge badge-neutral text-xs text-nowrap sm:text-sm">
+                        {showtimes[0].subtitle}
+                      </div>
+                    )}
                   </h4>
                   <div className="flex flex-row gap-3">
                     {showtimes.map((showtime) => (
-                      <button key={showtime.showtime_id} className="btn btn-primary">
+                      <button key={showtime.showtime_id} className="btn btn-primary" onClick={() => router.push(`/reservation/${showtime.showtime_id}`)}>
                         {formatTimeToHHMM(new Date(showtime.showtime))}
                       </button>
                     ))}
