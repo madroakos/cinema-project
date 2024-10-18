@@ -2,30 +2,30 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create example movies
-  const movie1 = await prisma.movies.create({
+  // Create example Movies
+  const batman = await prisma.movies.create({
     data: {
-      title: 'Inception',
-      posterUrl: 'https://example.com/inception.jpg',
-      genre: 'Sci-Fi',
-      duration: 148,
-      description: 'A thief who steals corporate secrets through the use of dream-sharing technology.',
-      release_date: new Date('2010-07-16'),
-    },
-  });
-
-  const movie2 = await prisma.movies.create({
-    data: {
-      title: 'The Matrix',
-      posterUrl: 'https://example.com/matrix.jpg',
+      title: 'The Batman',
+      posterUrl: 'https://m.media-amazon.com/images/I/91ezOOQjE3L._AC_UF894,1000_QL80_.jpg',
       genre: 'Action',
-      duration: 136,
-      description: 'A computer hacker learns about the true nature of his reality and his role in the war against its controllers.',
-      release_date: new Date('1999-03-31'),
+      duration: 176,
+      description: 'The newest Batman movie.',
+      release_date: new Date('2022-03-04'),
     },
   });
 
-  // Create example screens
+  const joker = await prisma.movies.create({
+    data: {
+      title: 'Joker',
+      posterUrl: 'https://m.media-amazon.com/images/I/51E+o6036kL._AC_UF894,1000_QL80_.jpg',
+      genre: 'Drama',
+      duration: 122,
+      description: 'The newest Joker movie.',
+      release_date: new Date('2019-10-04'),
+    },
+  });
+
+  // Create example Screens
   const screen1 = await prisma.screens.create({
     data: {
       screen_number: 1,
@@ -37,69 +37,185 @@ async function main() {
   const screen2 = await prisma.screens.create({
     data: {
       screen_number: 2,
-      rows: 15,
-      columns: 25,
+      rows: 8,
+      columns: 15,
     },
   });
 
-  // Create example showtimes
-  const showtime1 = await prisma.showtimes.create({
+  // Create example Showtimes
+  await prisma.showtimes.create({
     data: {
-      movie_id: movie1.movie_id,
+      movie_id: batman.movie_id,
       screen_id: screen1.screen_id,
       showtime: new Date('2023-10-01T14:00:00Z'),
+      dimension: '2D',
+      language: 'Angol',
+      subtitle: 'Magyar feliratos',
     },
   });
 
-  const showtime2 = await prisma.showtimes.create({
+  await prisma.showtimes.create({
     data: {
-      movie_id: movie2.movie_id,
-      screen_id: screen2.screen_id,
+      movie_id: batman.movie_id,
+      screen_id: screen1.screen_id,
       showtime: new Date('2023-10-01T17:00:00Z'),
+      dimension: '2D',
+      language: 'Magyar',
+      subtitle: 'None',
     },
   });
 
-  // Create example bookings
-  const booking1 = await prisma.bookings.create({
+  await prisma.showtimes.create({
     data: {
-      user_id: 1,
-      showtime_id: showtime1.showtime_id,
-      booking_date: new Date(),
-      total_amount: 15.00,
-      status: 'confirmed',
+      movie_id: batman.movie_id,
+      screen_id: screen1.screen_id,
+      showtime: new Date('2023-10-01T20:00:00Z'),
+      dimension: '2D',
+      language: 'Angol',
+      subtitle: 'Magyar feliratos',
     },
   });
 
-  const booking2 = await prisma.bookings.create({
+  await prisma.showtimes.create({
     data: {
-      user_id: 2,
-      showtime_id: showtime2.showtime_id,
-      booking_date: new Date(),
-      total_amount: 20.00,
-      status: 'confirmed',
+      movie_id: batman.movie_id,
+      screen_id: screen2.screen_id,
+      showtime: new Date('2023-10-01T10:00:00Z'),
+      dimension: '3D',
+      language: 'Angol',
+      subtitle: 'Magyar feliratos',
     },
   });
 
-  // Create example tickets
-  await prisma.tickets.create({
+  await prisma.showtimes.create({
     data: {
-      booking_id: booking1.booking_id,
-      seat_id: 1,
+      movie_id: batman.movie_id,
+      screen_id: screen2.screen_id,
+      showtime: new Date('2023-10-01T15:00:00Z'),
+      dimension: '3D',
+      language: 'Magyar',
+      subtitle: 'None',
     },
   });
 
-  await prisma.tickets.create({
+  await prisma.showtimes.create({
     data: {
-      booking_id: booking2.booking_id,
-      seat_id: 2,
+      movie_id: batman.movie_id,
+      screen_id: screen2.screen_id,
+      showtime: new Date('2023-10-01T20:00:00Z'),
+      dimension: '3D',
+      language: 'Angol',
+      subtitle: 'Magyar feliratos',
     },
   });
 
-  console.log('Example data inserted successfully');
+  await prisma.showtimes.create({
+    data: {
+      movie_id: joker.movie_id,
+      screen_id: screen1.screen_id,
+      showtime: new Date('2023-10-01T14:00:00Z'),
+      dimension: '2D',
+      language: 'Angol',
+      subtitle: 'Magyar feliratos',
+    },
+  });
+
+  await prisma.showtimes.create({
+    data: {
+      movie_id: joker.movie_id,
+      screen_id: screen1.screen_id,
+      showtime: new Date('2023-10-01T17:00:00Z'),
+      dimension: '2D',
+      language: 'Magyar',
+      subtitle: 'None',
+    },
+  });
+
+  await prisma.showtimes.create({
+    data: {
+      movie_id: joker.movie_id,
+      screen_id: screen1.screen_id,
+      showtime: new Date('2023-10-01T20:00:00Z'),
+      dimension: '2D',
+      language: 'Angol',
+      subtitle: 'Magyar feliratos',
+    },
+  });
+
+  await prisma.showtimes.create({
+    data: {
+      movie_id: joker.movie_id,
+      screen_id: screen2.screen_id,
+      showtime: new Date('2023-10-01T10:00:00Z'),
+      dimension: '3D',
+      language: 'Angol',
+      subtitle: 'Magyar feliratos',
+    },
+  });
+
+  await prisma.showtimes.create({
+    data: {
+      movie_id: joker.movie_id,
+      screen_id: screen2.screen_id,
+      showtime: new Date('2023-10-01T15:00:00Z'),
+      dimension: '3D',
+      language: 'Magyar',
+      subtitle: 'None',
+    },
+  });
+
+  await prisma.showtimes.create({
+    data: {
+      movie_id: joker.movie_id,
+      screen_id: screen2.screen_id,
+      showtime: new Date('2023-10-01T20:00:00Z'),
+      dimension: '3D',
+      language: 'Angol',
+      subtitle: 'Magyar feliratos',
+    },
+  });
+
+  // Create example Bookings
+  // const booking1 = await prisma.bookings.create({
+  //   data: {
+  //     user_id: 1,
+  //     showtime_id: showtime1.showtime_id,
+  //     booking_date: new Date(),
+  //     total_amount: 15.0,
+  //     status: 'confirmed',
+  //   },
+  // });
+
+  // const booking2 = await prisma.bookings.create({
+  //   data: {
+  //     user_id: 2,
+  //     showtime_id: showtime2.showtime_id,
+  //     booking_date: new Date(),
+  //     total_amount: 12.0,
+  //     status: 'confirmed',
+  //   },
+  // });
+
+  // Create example Tickets
+  // await prisma.tickets.create({
+  //   data: {
+  //     booking_id: booking1.booking_id,
+  //     seat_id: 1,
+  //   },
+  // });
+
+  // await prisma.tickets.create({
+  //   data: {
+  //     booking_id: booking2.booking_id,
+  //     seat_id: 2,
+  //   },
+  // });
+
+  console.log('Database has been populated with example data.');
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
     console.error(e);
     process.exit(1);
   })
