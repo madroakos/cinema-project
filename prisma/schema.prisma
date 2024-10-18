@@ -33,6 +33,9 @@ model Showtimes {
   movie_id        Int
   screen_id       Int
   showtime        DateTime
+  dimension       String
+  language        String
+  subtitle        String
 
   Movies          Movies   @relation(fields: [movie_id], references: [movie_id])
   Screens         Screens  @relation(fields: [screen_id], references: [screen_id])
