@@ -12,6 +12,19 @@ export async function getAllMovies() {
   return movies
 }
 
+export async function getMovieByID(movieID: string) {
+  const prisma = new PrismaClient()
+  const movie = await prisma.movies.findUnique({
+    where: {
+      movie_id: Number(movieID),
+    },
+    include: {
+      Showtimes: true,
+    },
+  })
+  return movie
+}
+
 export async function getShowtimeByID(showtimeID: string) {
   const prisma = new PrismaClient()
   const showtime = await prisma.showtimes.findUnique({
